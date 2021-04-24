@@ -8,7 +8,9 @@ const exporter: Exporter = (filePath, themeDomain, strings) => {
     .join("");
 
   const data = `<?php\nreturn [\n${translations}];\n?>`;
-  fs.writeFileSync(filePath, data, { encoding: "utf-8" });
+  fs.writeFileSync(filePath, data, {
+    encoding: "utf-8",
+  });
 };
 
 export default (): BabelCore.PluginObj<VisitorState> => ({
@@ -23,12 +25,15 @@ export default (): BabelCore.PluginObj<VisitorState> => ({
       if (path.node.arguments[0].type !== "StringLiteral") return;
 
       const translationString = path.node.arguments[0].value;
+      const finder = (x: string) => x == translationString;
+      if (state.extractedString.findIndex(finder) > -1) return;
+      
       state.extractedString.push(translationString);
     },
   },
   post(state) {
     const opts = this.opts;
-    const outputPath = opts.outputPath || "/languages/wp-translations.php";
+    const outputPath = opts.outputPath || "./languages/wp-translations.php";
     const themeDomain = opts.themeDomain || "themedomain";
     exporter(outputPath, themeDomain, this.extractedString);
   },

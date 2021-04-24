@@ -4,4 +4,5 @@ const test = () => {
   const { t } = useTranslation();
   t("Nice");
   t("Wow");
+  return t("Apakah benar?");
 };
