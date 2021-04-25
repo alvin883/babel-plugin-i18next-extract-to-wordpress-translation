@@ -2,9 +2,14 @@ import * as BabelCore from "@babel/core";
 import * as fs from "fs";
 import { Exporter, VisitorState } from "./types";
 
+const output: string[] = [];
+
 const exporter: Exporter = (filePath, themeDomain, strings) => {
   const translations = strings
-    .map((s) => `'${s}' => __('${s}', '${themeDomain}'),\n`)
+    .map((s) => {
+      const str = s.replace("'", "\\'");
+      return `'${str}' => __('${str}', '${themeDomain}'),\n`;
+    })
     .join("");
 
   const data = `<?php\nreturn [\n${translations}];\n?>`;
@@ -14,9 +19,6 @@ const exporter: Exporter = (filePath, themeDomain, strings) => {
 };
 
 export default (): BabelCore.PluginObj<VisitorState> => ({
-  pre(state) {
-    this.extractedString = [];
-  },
   visitor: {
     CallExpression(path, state) {
       const callee = path.get("callee");
@@ -26,15 +28,15 @@ export default (): BabelCore.PluginObj<VisitorState> => ({
 
       const translationString = path.node.arguments[0].value;
       const finder = (x: string) => x == translationString;
-      if (state.extractedString.findIndex(finder) > -1) return;
-      
-      state.extractedString.push(translationString);
+      if (output.findIndex(finder) > -1) return;
+
+      output.push(translationString);
     },
   },
   post(state) {
     const opts = this.opts;
     const outputPath = opts.outputPath || "./languages/wp-translations.php";
     const themeDomain = opts.themeDomain || "themedomain";
-    exporter(outputPath, themeDomain, this.extractedString);
+    exporter(outputPath, themeDomain, output);
   },
 });

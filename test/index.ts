@@ -14,7 +14,7 @@ function transform(filePath: string, options: Partial<Options>) {
   })?.code;
 }
 
-describe("Should pass", () => {
+describe("Basic check", () => {
   it("should pass", () => {
     const expectedOutput = (() => {
       if (fs.existsSync(testPath("use-translation.php"))) {

@@ -9,13 +9,6 @@ export type VisitorState = {
   extractedString: string[];
 };
 
-export type OutputState = {
-  translations: string[];
-  options: Partial<Options>;
-  add: (val: string) => void;
-  export: (filePath: string, themeDomain: string, strings: string[]) => void;
-};
-
 export type Exporter = (
   filePath: string,
   themeDomain: string,
