@@ -4,5 +4,5 @@
 
 | Name        | type   | default                          |
 | ----------- | ------ | -------------------------------- |
-| filePath    | string | `/languages/wp-translations.php` |
+| outputPath  | string | `/languages/wp-translations.php` |
 | themeDomain | string | `themedomain`                    |
