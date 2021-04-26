@@ -5,7 +5,9 @@ import { Exporter, VisitorState } from "./types";
 const output: string[] = [];
 
 const exporter: Exporter = (filePath, themeDomain, strings) => {
-  const translations = strings
+  const sortByName = (arr: string[]) => arr.sort((a, b) => a.localeCompare(b));
+  const sortedStrings = sortByName(strings);
+  const translations = sortedStrings
     .map((s) => {
       const str = s.replace("'", "\\'");
       return `'${str}' => __('${str}', '${themeDomain}'),\n`;
