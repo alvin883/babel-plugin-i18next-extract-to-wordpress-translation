@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-i18next-extract-to-wordpress-translation",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Statically extract translation keys from i18next application into PHP file so it can be used in WordPress translation",
   "main": "./dist/index.js",
   "author": "Alvin Novian <alvinnovian883@gmail.com>",
@@ -19,6 +19,7 @@
     "@babel/core": "^7.13.16",
     "@babel/traverse": "^7.13.17",
     "@babel/types": "^7.13.17",
+    "axios": "^0.21.1",
     "react-i18next": "^11.8.13",
     "typescript": "^4.2.4"
   },

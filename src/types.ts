@@ -9,7 +9,12 @@ export type VisitorState = {
   extractedString: string[];
 };
 
-export type Exporter = (
+export type URLExporter = (
+  url: string,
+  strings: string[]
+) => void;
+
+export type PHPExporter = (
   filePath: string,
   themeDomain: string,
   strings: string[]
