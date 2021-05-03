@@ -46,6 +46,7 @@ export default (): BabelCore.PluginObj<VisitorState> => ({
       const callee = path.get("callee");
       if (!callee.isIdentifier()) return;
       if (callee.node.name !== "t") return;
+      if (!path.node.arguments || !path.node.arguments.length) return;
       if (path.node.arguments[0].type !== "StringLiteral") return;
 
       const translationString = path.node.arguments[0].value;
