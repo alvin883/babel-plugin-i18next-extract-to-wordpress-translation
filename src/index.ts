@@ -18,6 +18,7 @@ const phpExporter: PHPExporter = (filePath, themeDomain, strings) => {
     .join("");
 
   const data = `<?php\nreturn [\n${translations}];\n?>`;
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, data, {
     encoding: "utf-8",
   });
