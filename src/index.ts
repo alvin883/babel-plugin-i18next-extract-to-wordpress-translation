@@ -12,7 +12,7 @@ const phpExporter: PHPExporter = (filePath, themeDomain, strings) => {
   const sortedStrings = sortByName(strings);
   const translations = sortedStrings
     .map((s) => {
-      const str = s.replace("'", "\\'");
+      const str = s.replace(/\'/g, "\\'");
       return `'${str}' => __('${str}', '${themeDomain}'),\n`;
     })
     .join("");
